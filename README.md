@@ -1,43 +1,38 @@
 # Daily Task Dashboard
 
-A simple daily task dashboard built as a front-end practice project using vanilla JavaScript.
+A clean and user-friendly daily task dashboard built as a front-end practice project.  
+The app helps users organize tasks, mark priorities, and keep track of what’s left to do — with data saved locally in the browser.
 
-The goal of this project is to strengthen core front-end fundamentals such as DOM manipulation, state management, and clean UI structure before moving on to frameworks like React.
-
----
+## Live Demo
+https://YOUR_USERNAME.github.io/daily-dashboard/
 
 ## Features
-- Add daily tasks
-- Mark tasks as completed
-- Delete tasks
-- Clean and responsive layout
-- Data persistence with localStorage (in progress)
-
----
+- Add and delete tasks  
+- Mark tasks as completed (checkbox)  
+- Mark tasks as important (⭐)  
+- Reorder tasks (move up / down)  
+- Filter tasks (All / Active / Done)  
+- Remaining tasks counter  
+- Data persistence using localStorage  
+- Responsive layout with custom purple theme  
 
 ## Tech Stack
-- HTML
-- CSS
-- JavaScript (Vanilla)
+- HTML  
+- CSS  
+- JavaScript (Vanilla)  
+- GitHub Pages (deployment)
 
----
-
-## What I’m Practicing With This Project
-- DOM manipulation
-- Event handling
-- Basic state management
-- Structuring small front-end applications
-- Git & GitHub workflow
-
----
+## What I Practiced
+- DOM manipulation and event handling  
+- Managing application state in JavaScript  
+- Persisting data with localStorage  
+- Building reusable UI components  
+- Iterative UI/UX improvements  
+- Git & GitHub workflow  
 
 ## Project Status
-🚧 In progress  
-This project is part of a structured learning plan focused on building real, finished applications.
+Complete for v1.  
+Planned improvements: drag-and-drop reordering, theme toggle (light/dark), keyboard shortcuts.
 
----
-
-## Future Improvements
-- Task filtering (All / Active / Completed)
-- Better UI/UX polish
-- Keyboard support
+## Screenshots
+_Add 1–2 screenshots of the app here._
