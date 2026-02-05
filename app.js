@@ -2,36 +2,89 @@ const input = document.querySelector(".task-input input");
 const addButton = document.querySelector(".task-input button");
 const taskList = document.querySelector(".task-list");
 
-addButton.addEventListener("click", addTask);
+let tasks = loadTasks(); // [{ id, text, done }]
+
+addButton.addEventListener("click", handleAdd);
 
 input.addEventListener("keydown", (e) => {
-  if (e.key === "Enter") addTask();
+  if (e.key === "Enter") handleAdd();
 });
 
-function addTask() {
-  const taskText = input.value.trim();
-  if (taskText === "") return;
+// Initial render
+renderTasks();
 
-  const li = document.createElement("li");
+/* -------------------- Core actions -------------------- */
 
-  const span = document.createElement("span");
-  span.textContent = taskText;
+function handleAdd() {
+  const text = input.value.trim();
+  if (text === "") return;
 
-  span.addEventListener("click", () => {
-    li.classList.toggle("done");
-  });
+  const newTask = {
+    id: Date.now(),
+    text,
+    done: false,
+  };
 
-  const deleteBtn = document.createElement("button");
-  deleteBtn.textContent = "✕";
-  deleteBtn.classList.add("delete-btn");
-
-  deleteBtn.addEventListener("click", () => {
-    li.remove();
-  });
-
-  li.appendChild(span);
-  li.appendChild(deleteBtn);
-  taskList.appendChild(li);
+  tasks.push(newTask);
+  saveTasks(tasks);
+  renderTasks();
 
   input.value = "";
+}
+
+function handleToggle(id) {
+  tasks = tasks.map((t) =>
+    t.id === id ? { ...t, done: !t.done } : t
+  );
+
+  saveTasks(tasks);
+  renderTasks();
+}
+
+function handleDelete(id) {
+  tasks = tasks.filter((t) => t.id !== id);
+
+  saveTasks(tasks);
+  renderTasks();
+}
+
+/* -------------------- Rendering -------------------- */
+
+function renderTasks() {
+  taskList.innerHTML = "";
+
+  for (const task of tasks) {
+    const li = document.createElement("li");
+    if (task.done) li.classList.add("done");
+
+    const span = document.createElement("span");
+    span.textContent = task.text;
+    span.addEventListener("click", () => handleToggle(task.id));
+
+    const deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "✕";
+    deleteBtn.classList.add("delete-btn");
+    deleteBtn.addEventListener("click", () => handleDelete(task.id));
+
+    li.appendChild(span);
+    li.appendChild(deleteBtn);
+    taskList.appendChild(li);
+  }
+}
+
+/* -------------------- Storage -------------------- */
+
+function saveTasks(tasksArray) {
+  localStorage.setItem("tasks", JSON.stringify(tasksArray));
+}
+
+function loadTasks() {
+  const raw = localStorage.getItem("tasks");
+  if (!raw) return [];
+
+  try {
+    return JSON.parse(raw);
+  } catch {
+    return [];
+  }
 }
