@@ -53,3 +53,26 @@ body {
   background: #eee;
   border-radius: 6px;
 }
+
+.task-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.delete-btn {
+  background: transparent;
+  border: none;
+  color: #888;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.delete-btn:hover {
+  color: #ff4d4d;
+}
+
+.delete-btn {
+  font-size: 18px;
+  padding: 4px 8px;
+}
