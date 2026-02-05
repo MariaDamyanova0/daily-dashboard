@@ -17,6 +17,10 @@ function addTask() {
   const span = document.createElement("span");
   span.textContent = taskText;
 
+  span.addEventListener("click", () => {
+    li.classList.toggle("done");
+  });
+
   const deleteBtn = document.createElement("button");
   deleteBtn.textContent = "✕";
   deleteBtn.classList.add("delete-btn");

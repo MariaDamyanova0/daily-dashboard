@@ -76,3 +76,12 @@ body {
   font-size: 18px;
   padding: 4px 8px;
 }
+
+.task-list li.done span {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.task-list li span {
+  cursor: pointer;
+}
