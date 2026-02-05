@@ -34,10 +34,12 @@ function handleAdd() {
   if (text === "") return;
 
   const newTask = {
-    id: Date.now(),
-    text,
-    done: false,
+  id: Date.now(),
+  text,
+  done: false,
+  important: false,
   };
+
 
   tasks.push(newTask);
   saveTasks(tasks);
@@ -54,6 +56,32 @@ function handleToggle(id) {
 
 function handleDelete(id) {
   tasks = tasks.filter((t) => t.id !== id);
+  saveTasks(tasks);
+  renderTasks();
+}
+
+function moveTaskUp(id) {
+  const index = tasks.findIndex((t) => t.id === id);
+  if (index <= 0) return;
+
+  [tasks[index - 1], tasks[index]] = [tasks[index], tasks[index - 1]];
+  saveTasks(tasks);
+  renderTasks();
+}
+
+function moveTaskDown(id) {
+  const index = tasks.findIndex((t) => t.id === id);
+  if (index === -1 || index >= tasks.length - 1) return;
+
+  [tasks[index], tasks[index + 1]] = [tasks[index + 1], tasks[index]];
+  saveTasks(tasks);
+  renderTasks();
+}
+
+function handleImportant(id) {
+  tasks = tasks.map((t) =>
+    t.id === id ? { ...t, important: !t.important } : t
+  );
   saveTasks(tasks);
   renderTasks();
 }
@@ -79,6 +107,24 @@ function renderTasks() {
   for (const task of visibleTasks) {
     const li = document.createElement("li");
     if (task.done) li.classList.add("done");
+    if (task.important) li.classList.add("important");
+
+    const controls = document.createElement("div");
+    controls.classList.add("task-controls");
+
+    const upBtn = document.createElement("button");
+    upBtn.classList.add("ctrl-btn");
+    upBtn.textContent = "↑";
+    upBtn.addEventListener("click", () => moveTaskUp(task.id));
+
+    const downBtn = document.createElement("button");
+    downBtn.classList.add("ctrl-btn");
+    downBtn.textContent = "↓";
+    downBtn.addEventListener("click", () => moveTaskDown(task.id));
+
+    controls.appendChild(upBtn);
+    controls.appendChild(downBtn);
+
 
     // left side: checkbox + text
     const left = document.createElement("div");
@@ -92,15 +138,24 @@ function renderTasks() {
     const span = document.createElement("span");
     span.textContent = task.text;
 
+    const starBtn = document.createElement("button");
+    starBtn.classList.add("star-btn");
+    starBtn.textContent = task.important ? "★" : "☆";
+    starBtn.addEventListener("click", () => handleImportant(task.id));
+
+
     left.appendChild(checkbox);
+    left.appendChild(starBtn);
     left.appendChild(span);
+
 
     // delete button
     const deleteBtn = document.createElement("button");
     deleteBtn.textContent = "✕";
     deleteBtn.classList.add("delete-btn");
     deleteBtn.addEventListener("click", () => handleDelete(task.id));
-
+    
+    li.appendChild(controls);
     li.appendChild(left);
     li.appendChild(deleteBtn);
     taskList.appendChild(li);
