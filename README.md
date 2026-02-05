@@ -4,7 +4,7 @@ A clean and user-friendly daily task dashboard built as a front-end practice pro
 The app helps users organize tasks, mark priorities, and keep track of what’s left to do — with data saved locally in the browser.
 
 ## Live Demo
-https://YOUR_USERNAME.github.io/daily-dashboard/
+https://mariadamyanova0.github.io/daily-dashboard/
 
 ## Features
 - Add and delete tasks  
