@@ -47,17 +47,13 @@ function handleAdd() {
 }
 
 function handleToggle(id) {
-  tasks = tasks.map((t) =>
-    t.id === id ? { ...t, done: !t.done } : t
-  );
-
+  tasks = tasks.map((t) => (t.id === id ? { ...t, done: !t.done } : t));
   saveTasks(tasks);
   renderTasks();
 }
 
 function handleDelete(id) {
   tasks = tasks.filter((t) => t.id !== id);
-
   saveTasks(tasks);
   renderTasks();
 }
@@ -67,9 +63,11 @@ function handleDelete(id) {
 function renderTasks() {
   taskList.innerHTML = "";
 
+  // counter
   const leftCount = tasks.filter((t) => !t.done).length;
   counterEl.textContent = `${leftCount} left`;
 
+  // filter
   let visibleTasks = tasks;
 
   if (currentFilter === "active") {
@@ -82,16 +80,28 @@ function renderTasks() {
     const li = document.createElement("li");
     if (task.done) li.classList.add("done");
 
+    // left side: checkbox + text
+    const left = document.createElement("div");
+    left.classList.add("task-left");
+
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.checked = task.done;
+    checkbox.addEventListener("change", () => handleToggle(task.id));
+
     const span = document.createElement("span");
     span.textContent = task.text;
-    span.addEventListener("click", () => handleToggle(task.id));
 
+    left.appendChild(checkbox);
+    left.appendChild(span);
+
+    // delete button
     const deleteBtn = document.createElement("button");
     deleteBtn.textContent = "✕";
     deleteBtn.classList.add("delete-btn");
     deleteBtn.addEventListener("click", () => handleDelete(task.id));
 
-    li.appendChild(span);
+    li.appendChild(left);
     li.appendChild(deleteBtn);
     taskList.appendChild(li);
   }
