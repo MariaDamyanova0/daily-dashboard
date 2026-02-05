@@ -1,13 +1,27 @@
 const input = document.querySelector(".task-input input");
 const addButton = document.querySelector(".task-input button");
 const taskList = document.querySelector(".task-list");
+const filterButtons = document.querySelectorAll(".filter-btn");
+const counterEl = document.querySelector(".counter");
 
+let currentFilter = "all";
 let tasks = loadTasks(); // [{ id, text, done }]
 
 addButton.addEventListener("click", handleAdd);
 
 input.addEventListener("keydown", (e) => {
   if (e.key === "Enter") handleAdd();
+});
+
+filterButtons.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    currentFilter = btn.dataset.filter;
+
+    filterButtons.forEach((b) => b.classList.remove("active"));
+    btn.classList.add("active");
+
+    renderTasks();
+  });
 });
 
 // Initial render
@@ -53,7 +67,18 @@ function handleDelete(id) {
 function renderTasks() {
   taskList.innerHTML = "";
 
-  for (const task of tasks) {
+  const leftCount = tasks.filter((t) => !t.done).length;
+  counterEl.textContent = `${leftCount} left`;
+
+  let visibleTasks = tasks;
+
+  if (currentFilter === "active") {
+    visibleTasks = tasks.filter((t) => !t.done);
+  } else if (currentFilter === "done") {
+    visibleTasks = tasks.filter((t) => t.done);
+  }
+
+  for (const task of visibleTasks) {
     const li = document.createElement("li");
     if (task.done) li.classList.add("done");
 

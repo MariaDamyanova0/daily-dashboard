@@ -8,18 +8,23 @@
 </head>
 <body>
   <div class="app">
-    <h1>Daily Tasks</h1>
+  <h1>Daily Tasks</h1>
 
-    <div class="task-input">
-      <input type="text" placeholder="Add a new task..." />
-      <button>Add</button>
-    </div>
-
-    <ul class="task-list">
-      <!-- tasks will appear here -->
-    </ul>
+  <div class="task-input">
+    <input type="text" placeholder="Add a new task..." />
+    <button>Add</button>
   </div>
 
-  <script src="app.js"></script>
-</body>
-</html>
+  <div class="toolbar">
+    <div class="filters">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="active">Active</button>
+      <button class="filter-btn" data-filter="done">Done</button>
+    </div>
+
+    <p class="counter">0 left</p>
+  </div>
+
+  <ul class="task-list"></ul>
+</div>
+<script src="app.js"></script>
